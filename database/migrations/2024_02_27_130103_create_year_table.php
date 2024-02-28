@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('years', function (Blueprint $table) {
-            $table->bigInteger('year')->unique();
+            $table->bigInteger('year')->unsigned()->primary();
             $table->boolean('active');
         });
     }

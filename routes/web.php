@@ -38,5 +38,7 @@ Route::prefix('/adm')
         Route::controller(CategoryController::class)
             ->group(function(){
                 Route::get('/category_editor', 'categoryEditor')->name('categoryEditor');
+                Route::post('/category_editor/year', 'addNewYear')->name('addNewYear');
+                Route::post('/category_editor/discipline','addNewDiscipline')->name('addNewDiscipline');
             });
     });

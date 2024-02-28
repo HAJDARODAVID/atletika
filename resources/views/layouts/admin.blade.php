@@ -117,7 +117,7 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ route('categoryEditor') }}">
               <span data-feather="file" class="align-text-bottom"></span>
-              Kategorije / discipline
+              Podaci prijavnice
             </a>
           </li>
           <li class="nav-item">
@@ -154,6 +154,18 @@
 </div>
 
     @livewireScripts
+    <script>
+      function showModal(modal) {
+          document.getElementById(modal).style.display = 'block';
+      }
+      function closeModal(modal) {
+          document.getElementById(modal).style.display = 'none';
+      }
+      function submitForm(form){
+          event.preventDefault();
+          document.getElementById(form).submit();
+      }
+    </script>
     <script src="{{ url('js/bootstrap.bundle.min.js') }}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
