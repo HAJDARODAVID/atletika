@@ -8,7 +8,7 @@
         <div class="col">
           <div class="form-group">
             <label for="inputState">GODIŠTE</label>
-            <select id="inputState" class="form-control">
+            <select id="inputState" class="form-control" wire:model.live='yearSelected'>
                 <option value=0>Odaberi...</option>
                 @foreach ($years as $year)
                   <option value="{{ $year->year }}">{{ $year->year }}</option>
@@ -44,17 +44,21 @@
                 </tr>
             </thead>
             <tbody>
-                @for ($i = 1; $i <= 4; $i++)
+                @for ($i = 1; $i <= $maxComp; $i++)
                     <tr>
                         <td>{{ $i }}</td>
-                        <td><input type="email" class="form-control" id="team" ></td>
-                        <td><input type="email" class="form-control" id="team" ></td>
+                        <td><input type="text" class="form-control" id="firstName" wire:model.blur='comp.{{ $i }}.firstName'></td>
+                        <td><input type="text" class="form-control" id="lastName" wire:model.blur='comp.{{ $i }}.lastName'></td>
                         @if ($catSelected == 3)
                             <td>
-                                <select id="inputState" class="form-control">
+                                <select id="inputState" class="form-control" wire:model.live='comp.{{ $i }}.gender'>
                                     <option value=0>Odaberi...</option>
                                     @foreach ($mixCat as $mc)
-                                        <option value="{{ $mc->id }}">{{ $mc->name }}</option>
+                                        <option value="{{ $mc->id }}"
+                                            @if ($genderCount[$mc->id] >= $maxComp/$ratio) disabled @endif
+                                            >
+                                            {{ $mc->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </td>
@@ -62,8 +66,20 @@
                     </tr>        
                 @endfor
             </tbody>
-        </table>  
+        </table> 
+        <hr> 
     @endif
+
+    
+
+    @if ($yearSelected !=0)
+        <b>Discipline:</b><br>
+        &nbsp; - štafeta,
+        <hr>
+    @endif
+    
+
+    <button wire:click='test'>test</button>
     
 
     
