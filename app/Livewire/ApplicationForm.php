@@ -3,6 +3,8 @@
 namespace App\Livewire;
 
 use App\Models\Category;
+use App\Models\Discipline;
+use App\Models\Dsply;
 use App\Models\Year;
 use Livewire\Component;
 use Livewire\Attributes\On; 
@@ -18,7 +20,9 @@ class ApplicationForm extends Component
     public $ratio        = 2;
     public $comp;
     public $genderCount;
-
+    public $discipline = NULL;
+    public $dsplArray  = [];
+    public $showModal  = 'none';
 
     #[On('refreshComponent')] 
     public function mount(){
@@ -33,7 +37,16 @@ class ApplicationForm extends Component
     }
 
     public function test(){
-        dd($this->comp);
+        dd($this->dsplArray);
+    }
+
+    public function modal($type){
+        if($type){
+            return $this->showModal='block';
+        }
+        if(!$type){
+            return $this->showModal='none';
+        }
     }
 
     public function updatedComp($key, $value){
@@ -50,7 +63,17 @@ class ApplicationForm extends Component
             }
         }
     }
-    
+
+    public function updatedYearSelected(){
+        $dspy=Dsply::where('year_id', $this->yearSelected)
+            ->pluck('dspl_id')->toArray();
+        $dspl=Discipline::whereIn('id', $dspy)->get();
+        $this->discipline = $dspl;  
+        foreach ($dspl as $dsp) {
+            $this->dsplArray[$dsp->id]=FALSE; 
+        } 
+    }
+
     private function setMixCat($trigger=null){
         return $this->cat->where('name', '!=', 'MIX');
     }

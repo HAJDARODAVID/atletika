@@ -22,5 +22,18 @@
             @yield('content')
         </main>
     </div>
+
+    <script>
+        function showModal(modal) {
+            document.getElementById(modal).style.display = 'block';
+        }
+        function closeModal(modal) {
+            document.getElementById(modal).style.display = 'none';
+        }
+        function submitForm(form){
+            event.preventDefault();
+            document.getElementById(form).submit();
+        }
+    </script>
 </body>
 </html>
