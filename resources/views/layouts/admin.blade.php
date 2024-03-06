@@ -120,7 +120,7 @@
               Podaci prijavnice
             </a>
           </li>
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a class="nav-link" href="#">
               <span data-feather="shopping-cart" class="align-text-bottom"></span>
               Products
@@ -143,7 +143,7 @@
               <span data-feather="layers" class="align-text-bottom"></span>
               Integrations
             </a>
-          </li>
+          </li> --}}
         </ul>
       </div>
     </nav>
