@@ -10,11 +10,12 @@ class DisciplineModal extends Component
     public $athlete;
     public $disciplines;
     public $modalShowStatus = 'none';
-    public $isComplete      = 'danger';
+    public $isComplete;
     public $dsplCount            = [];
     public $dsplArray;
 
     public function mount(){
+        $this->checkIfComplete();
         $this->dsplCount = [
             1 => 0,
             2 => 0
@@ -22,10 +23,13 @@ class DisciplineModal extends Component
     }
     public function changeModalStatus($status=0){
         if($status){
+            $this->dsplCount = $this->dsplCount($this->dsplArray);
+            //$this->checkIfComplete();
             return $this->modalShowStatus = 'block';
         }
         if(!$status){
             $this->dispatch('setUpDisciplinesForAthlete', $this->athlete, $this->dsplArray);
+            //$this->checkIfComplete();
             return $this->modalShowStatus = 'none';
         }
     }
@@ -38,10 +42,30 @@ class DisciplineModal extends Component
         if(!$key){
             $this->dsplCount[$type]--;
         }
+        //$this->checkIfComplete();
     }
 
-    public function test(){
-        dd($this->dsplArray, $this->dsplCount);
+    private function dsplCount($array){
+        $finalArray = [
+            1 => 0,
+            2 => 0
+        ];
+        foreach ($array as $key => $value) {
+            if ($value) {
+                $type = $this->disciplines->where('id', $key)->first()->type;
+                $finalArray[$type]++;
+            }
+        }
+        return $finalArray;
+    }
+
+    private function checkIfComplete(){
+        $arraySum = array_sum($this->dsplCount($this->dsplArray));
+        if($arraySum >= 4){
+            return $this->isComplete = 'success';
+        }else{
+            return $this->isComplete = 'danger';
+        }
     }
 
 

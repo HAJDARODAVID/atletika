@@ -37,7 +37,7 @@ class ApplicationForm extends Component
     }
 
     public function test(){
-        dd($this->comp);
+        dd($this->comp[1]['dspl']);
     }
 
     #[On('setUpDisciplinesForAthlete')]

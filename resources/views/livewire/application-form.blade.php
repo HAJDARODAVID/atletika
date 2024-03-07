@@ -69,7 +69,7 @@
                                 @livewire('discipline-modal',[
                                     'athlete' => $i,
                                     'disciplines' => $discipline,
-                                    'dsplArray' => $dsplArray
+                                    'dsplArray' => $comp[$i]['dspl'] != NULL ? $comp[$i]['dspl'] :$dsplArray
                                 ], key(date('h-m-s')))  
                             @endif
                         </td> 
