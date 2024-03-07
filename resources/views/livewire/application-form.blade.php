@@ -39,20 +39,21 @@
                     <td style="width: 150px">IME</td>
                     <td style="width: 150px">PREZIME</td>
                     @if ($catSelected == 3)
-                        <td>&#9794; / &#9792;</td>
+                        <td style="width: 80px">&#9794; / &#9792;</td>
                     @endif
+                    <td></td>
                 </tr>
             </thead>
             <tbody>
                 @for ($i = 1; $i <= $maxComp; $i++)
                     <tr>
-                        <td>{{ $i }}</td>
+                        <td rowspan="2">{{ $i }}</td>
                         <td><input type="text" class="form-control" id="firstName" wire:model.blur='comp.{{ $i }}.firstName'></td>
                         <td><input type="text" class="form-control" id="lastName" wire:model.blur='comp.{{ $i }}.lastName'></td>
                         @if ($catSelected == 3)
                             <td>
                                 <select id="inputState" class="form-control" wire:model.live='comp.{{ $i }}.gender'>
-                                    <option value=0>Odaberi...</option>
+                                    <option value=0>&#9794; / &#9792;</option>
                                     @foreach ($mixCat as $mc)
                                         <option value="{{ $mc->id }}"
                                             @if ($genderCount[$mc->id] >= $maxComp/$ratio) disabled @endif
@@ -62,15 +63,28 @@
                                     @endforeach
                                 </select>
                             </td>
-                        @endif  
-                    </tr>        
+                        @endif 
+                        <td>
+                            @if ($yearSelected)
+                                @livewire('discipline-modal',[
+                                    'athlete' => $i,
+                                    'disciplines' => $discipline
+                                ], key(date('h-m-s')))  
+                            @endif
+                        </td> 
+                    </tr> 
+                    <tr><td colspan="2">Discipline: </td></tr>        
                 @endfor
             </tbody>
         </table> 
         <hr> 
     @endif
 
-    @if ($yearSelected !=0)
+    {{-- @livewire('discipline-modal',[
+        'athlete' => 1,
+    ], key(1)) --}}
+
+    {{-- @if ($yearSelected !=0)
         <div class="d-flex mb-2">
             <div class="d-flex justify-content-end">
                 <x-basic-modal modalName="test" showModal='{{ $showModal }}'>
@@ -111,18 +125,17 @@
             &nbsp;
             <div class="justify-content-start"><b>Discipline: </b></div>
         </div>
-
-
-        
+        <x-discipline-modal>     
+        </x-discipline-modal>
         &nbsp; - Štafeta,
         <hr>
+    @endif --}}
 
-    @endif
+    <button wire:click='test'>test</button><br>
 
-    
-    
-
-    <button wire:click='test'>test</button>
+    @foreach ($comp as $key => $c)
+        {{ $key }} | {{ $c['firstName'] }} {{ $c['lastName'] }} / G:{{ $c['gender'] }} <br>
+    @endforeach
     
 
     

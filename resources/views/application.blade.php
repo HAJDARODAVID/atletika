@@ -10,7 +10,7 @@
                 </div>
 
                 <div class="card-body d-flex justify-content-center">
-                  <div class="" style="width: 450px">
+                  <div class="" style="width: 550px">
                     
                     @livewire('application-form')
                   </div>  

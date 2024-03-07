@@ -37,7 +37,7 @@ class ApplicationForm extends Component
     }
 
     public function test(){
-        dd($this->dsplArray);
+        dd($this->discipline);
     }
 
     public function modal($type){
@@ -86,6 +86,7 @@ class ApplicationForm extends Component
                     'firstName' => NULL,
                     'lastName'  => NULL,
                     'gender'    => 0,
+                    'dspl'    => 0,
                 ];
             }
             return $array;
