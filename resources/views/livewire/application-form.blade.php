@@ -70,7 +70,7 @@
                                     'athlete' => $i,
                                     'disciplines' => $discipline,
                                     'dsplArray' => $dsplArray
-                                ], key(time()))  
+                                ], key(date('h-m-s')))  
                             @endif
                         </td> 
                     </tr> 
