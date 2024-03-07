@@ -17,7 +17,8 @@
                                     <tr>
                                         <td>{{ $dspl->name }}</td>
                                         <td>
-                                            <input class="form-check-input" type="checkbox" wire:model.live='dspl.{{ $dspl->id }}'>
+                                            <input class="form-check-input" type="checkbox" wire:model.live='dsplArray.{{ $dspl->id }}' 
+                                            @if ($dsplCount[1]>=2 && !$dsplArray[$dspl->id]) disabled @endif>
                                         </td> 
                                     </tr>
                                 @endforeach
@@ -30,18 +31,20 @@
                                     <tr>
                                         <td>{{ $dspl->name }}</td>
                                         <td>
-                                            <input class="form-check-input" type="checkbox" wire:model.live='dspl.{{ $dspl->id }}'>
+                                            <input class="form-check-input" type="checkbox" wire:model.live='dsplArray.{{ $dspl->id }}' 
+                                            @if ($dsplCount[2]>=2 && !$dsplArray[$dspl->id]) disabled @endif>
                                         </td> 
                                     </tr>
                                 @endforeach
                             </table>
                         </div>
                     </div>
-                    @foreach ($dspl as $key => $d)
-                        {{$key }},
+                    @foreach ($dsplCount as $key => $d)
+                        {{$key }} - {{ $d }}
                     @endforeach
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" wire:click="test()">test</button>
                     <button type="button" class="btn btn-secondary" wire:click="changeModalStatus()">ZATVORI</button>
                 </div>
             </div>

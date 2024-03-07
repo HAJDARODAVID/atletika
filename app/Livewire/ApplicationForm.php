@@ -37,8 +37,13 @@ class ApplicationForm extends Component
     }
 
     public function test(){
-        dd($this->discipline);
+        dd($this->comp);
     }
+
+    #[On('setUpDisciplinesForAthlete')]
+    public function setAthleteDisciplines($athlete, $dspl){
+        return $this->comp[$athlete]['dspl']=$dspl;
+    } 
 
     public function modal($type){
         if($type){
@@ -72,6 +77,9 @@ class ApplicationForm extends Component
         foreach ($dspl as $dsp) {
             $this->dsplArray[$dsp->id]=FALSE; 
         } 
+        for ($i=1; $i <= $this->maxComp; $i++) { 
+            $this->comp[$i]['dspl']=NULL;
+        }
     }
 
     private function setMixCat($trigger=null){
@@ -86,7 +94,7 @@ class ApplicationForm extends Component
                     'firstName' => NULL,
                     'lastName'  => NULL,
                     'gender'    => 0,
-                    'dspl'    => 0,
+                    'dspl'    => NULL,
                 ];
             }
             return $array;

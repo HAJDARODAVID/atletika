@@ -36,8 +36,8 @@
             <thead>
                 <tr>
                     <td style="width: 20px">#</td>
-                    <td style="width: 150px">IME</td>
-                    <td style="width: 150px">PREZIME</td>
+                    <td style="width: 180px">IME</td>
+                    <td style="width: 180px">PREZIME</td>
                     @if ($catSelected == 3)
                         <td style="width: 80px">&#9794; / &#9792;</td>
                     @endif
@@ -68,12 +68,25 @@
                             @if ($yearSelected)
                                 @livewire('discipline-modal',[
                                     'athlete' => $i,
-                                    'disciplines' => $discipline
+                                    'disciplines' => $discipline,
+                                    'dsplArray' => $dsplArray
                                 ], key(date('h-m-s')))  
                             @endif
                         </td> 
                     </tr> 
-                    <tr><td colspan="2">Discipline: </td></tr>        
+                    <tr>
+                        <td colspan="2">
+                            Discipline: 
+                            @if (!is_null($comp[$i]['dspl']))
+                                @foreach ($comp[$i]['dspl'] as $key => $value )
+                                    @if ($value)
+                                        {{ $discipline->where('id', $key)->first()->name }},&nbsp;
+                                    @endif   
+                                @endforeach  
+                            @endif
+                            Štafeta
+                        </td>
+                    </tr>        
                 @endfor
             </tbody>
         </table> 

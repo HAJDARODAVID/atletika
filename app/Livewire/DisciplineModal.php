@@ -11,23 +11,39 @@ class DisciplineModal extends Component
     public $disciplines;
     public $modalShowStatus = 'none';
     public $isComplete      = 'danger';
-    public $dspl            = [];
+    public $dsplCount            = [];
+    public $dsplArray;
 
     public function mount(){
-        dd($this->dspl); 
+        $this->dsplCount = [
+            1 => 0,
+            2 => 0
+        ]; 
     }
     public function changeModalStatus($status=0){
         if($status){
             return $this->modalShowStatus = 'block';
         }
         if(!$status){
+            $this->dispatch('setUpDisciplinesForAthlete', $this->athlete, $this->dsplArray);
             return $this->modalShowStatus = 'none';
         }
     }
 
-    public function updatedDspl($key, $value){
-        $this->dspl[$value] = $key;
+    public function updatedDsplArray($key, $value){
+        $type = $this->disciplines->where('id', $value)->first()->type;
+        if($key){
+            $this->dsplCount[$type]++;
+        }
+        if(!$key){
+            $this->dsplCount[$type]--;
+        }
     }
+
+    public function test(){
+        dd($this->dsplArray, $this->dsplCount);
+    }
+
 
     public function render()
     {
