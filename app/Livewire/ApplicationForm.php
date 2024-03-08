@@ -90,7 +90,14 @@ class ApplicationForm extends Component
     }
 
     public function saveApplication(){
-        $this->validateData();
+        $data = $this->validateData();
+        if($data['errorCount']){
+            return;
+        }
+
+        if($data['errorCount'] == 0){
+            return redirect()->route('saveTeamApplication');
+        }
     }
 
     private function setMixCat($trigger=null){
@@ -144,13 +151,59 @@ class ApplicationForm extends Component
             $errorCount++;
         }
 
+        $athleteCount = 0;
         foreach ($this->comp as $key => $value) {
-            if($this->comp ){
-
+            if($this->comp[$key]['firstName'] || $this->comp[$key]['lastName']){
+                $athleteCount++;
+                if(!$this->comp[$key]['firstName']){
+                    $this->error[$key]['firstName']=TRUE;
+                    $errorCount++;
+                }
+                if(!$this->comp[$key]['lastName']){
+                    $this->error[$key]['lastName']=TRUE;
+                    $errorCount++;
+                }
+                $infoCount=0;
+                foreach ($this->comp[$key]['info'] as $info) {
+                    if($info){
+                        $infoCount++;
+                    }
+                }
+                if($infoCount != count($this->comp[$key]['info'])){
+                    $this->error[$key]['row']=TRUE;
+                    $errorCount++;
+                }
+                if($this->comp[$key]['dspl'] != NULL){
+                    $dspCount=$this->dsplCount($this->comp[$key]['dspl']);
+                    if($dspCount[1] < 2 && $dspCount[1] < 2){
+                        $this->error[$key]['row']=TRUE;
+                        $errorCount++;
+                    }
+                }else{
+                    $this->error[$key]['row']=TRUE;
+                    $errorCount++;
+                }                
             }
         }
+        if(!$athleteCount){
+            $this->error[1]['row']=TRUE;
+        }
+        $data['errorCount'] = $errorCount;
+        return $data;        
+    }
 
-        
+    private function dsplCount($array){
+        $finalArray = [
+            1 => 0,
+            2 => 0
+        ];
+        foreach ($array as $key => $value) {
+            if ($value) {
+                $type = $this->discipline->where('id', $key)->first()->type;
+                $finalArray[$type]++;
+            }
+        }
+        return $finalArray;
     }
 
     public function render()

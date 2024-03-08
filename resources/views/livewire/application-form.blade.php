@@ -46,10 +46,10 @@
             </thead>
             <tbody>
                 @for ($i = 1; $i <= $maxComp; $i++)
-                    <tr>
+                    <tr class="@isset($error[$i]['row']) table-danger @endisset">
                         <td rowspan="2">{{ $i }}</td>
-                        <td><input type="text" class="form-control" id="firstName" placeholder="Ime" wire:model.blur='comp.{{ $i }}.firstName'></td>
-                        <td><input type="text" class="form-control" id="lastName" placeholder="Prezime" wire:model.blur='comp.{{ $i }}.lastName'></td>
+                        <td><input type="text" class="form-control @isset($error[$i]['firstName']) is-invalid @endisset" id="firstName" placeholder="Ime" wire:model.blur='comp.{{ $i }}.firstName'></td>
+                        <td><input type="text" class="form-control @isset($error[$i]['lastName']) is-invalid @endisset" id="lastName" placeholder="Prezime" wire:model.blur='comp.{{ $i }}.lastName'></td>
                         @if ($catSelected == 3)
                             <td>
                                 <select id="inputState" class="form-control" wire:model.live='comp.{{ $i }}.gender'>
@@ -81,7 +81,7 @@
                             @endif
                         </td> 
                     </tr> 
-                    <tr>
+                    <tr class="@isset($error[$i]['row']) table-danger @endisset">
                         <td colspan="2">
                             Discipline: 
                             @if (!is_null($comp[$i]['dspl']))
@@ -93,23 +93,28 @@
                             @endif
                             Štafeta
                         </td>
+                        <td></td>
+                        @if ($catSelected == 3) <td></td> @endif
                     </tr>        
                 @endfor
             </tbody>
         </table> 
         <hr> 
     @endif
+    
+    <div class="d-flex justify-content-center">
+        <button class="btn btn-success btn-lg" wire:click='saveApplication'>SAVE</button>
+    </div>
+    
 
-    <button wire:click='saveApplication'>SAVE</button><br><br>
-
-    <button wire:click='test'>test</button><br>
+    {{-- <button wire:click='test'>test</button><br>
 
     @foreach ($comp as $key => $c)
         {{ $key }} | {{ $c['firstName'] }} {{ $c['lastName'] }} / G:{{ $c['gender'] }} <br>
         @foreach ($c['info'] as $k => $v)
             &nbsp; - {{ $k }} - {{ $v }} <br>
         @endforeach
-    @endforeach
+    @endforeach --}}
     
 
     

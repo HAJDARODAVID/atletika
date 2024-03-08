@@ -25,8 +25,8 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/test', function(){
-    return "im in";
-});
+    return "USPEL SI ŽBRGLJO";
+})->name('saveTeamApplication');
 
 Route::prefix('/adm')
     ->group(function(){
@@ -42,5 +42,7 @@ Route::prefix('/adm')
                 Route::post('/category_editor/discipline','addNewDiscipline')->name('addNewDiscipline');
             });
     });
+
+
 
 
