@@ -109,12 +109,12 @@
 
     {{-- <button wire:click='test'>test</button><br> --}}
 
-    @foreach ($comp as $key => $c)
+    {{-- @foreach ($comp as $key => $c)
         {{ $key }} | {{ $c['firstName'] }} {{ $c['lastName'] }} / G:{{ $c['gender'] }} <br>
         @foreach ($c['info'] as $k => $v)
             &nbsp; - {{ $k }} - {{ $v }} <br>
         @endforeach
-    @endforeach
+    @endforeach --}}
     
 
     
