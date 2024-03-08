@@ -1,4 +1,4 @@
-<div>
+<div style="display: inline">
     <a class="btn btn-{{ $isComplete }} btn-sm" href="#" wire:click="changeModalStatus('1')">+</a>
 
     <!-- Modal -->

@@ -37,12 +37,17 @@ class ApplicationForm extends Component
     }
 
     public function test(){
-        dd($this->comp[1]['dspl']);
+        dd($this->comp);
     }
 
     #[On('setUpDisciplinesForAthlete')]
     public function setAthleteDisciplines($athlete, $dspl){
         return $this->comp[$athlete]['dspl']=$dspl;
+    } 
+
+    #[On('setInfoForAthlete')]
+    public function setInfoForAthlete($athlete, $info){
+        return $this->comp[$athlete]['info']=$info;
     } 
 
     public function modal($type){
@@ -93,8 +98,15 @@ class ApplicationForm extends Component
                 $array[$i]=[
                     'firstName' => NULL,
                     'lastName'  => NULL,
-                    'gender'    => 0,
+                    'gender'    => NULL,
                     'dspl'    => NULL,
+                    'info' => [
+                        'address' => NULL,
+                        'city' => NULL,
+                        'state' => NULL,
+                        'zip' => NULL,
+                        'athlete_id' => NULL,
+                    ]
                 ];
             }
             return $array;

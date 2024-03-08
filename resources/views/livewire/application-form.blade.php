@@ -65,12 +65,19 @@
                             </td>
                         @endif 
                         <td>
-                            @if ($yearSelected)
-                                @livewire('discipline-modal',[
+                            @if ($comp[$i]['firstName'] && $comp[$i]['lastName'])
+                                @livewire('personal-info-modal', [
                                     'athlete' => $i,
-                                    'disciplines' => $discipline,
-                                    'dsplArray' => $comp[$i]['dspl'] != NULL ? $comp[$i]['dspl'] :$dsplArray
-                                ], key(date('h-m-s')))  
+                                    'athleteName' => $comp[$i]['firstName'] .' '. $comp[$i]['lastName'],
+                                    'info' => $comp[$i]['info'],
+                                ], key(date('h-m-s')))   
+                                @if ($yearSelected)
+                                    @livewire('discipline-modal',[
+                                        'athlete' => $i,
+                                        'disciplines' => $discipline,
+                                        'dsplArray' => $comp[$i]['dspl'] != NULL ? $comp[$i]['dspl'] :$dsplArray
+                                    ], key(date('h-m-s')))  
+                                @endif 
                             @endif
                         </td> 
                     </tr> 
@@ -93,61 +100,13 @@
         <hr> 
     @endif
 
-    {{-- @livewire('discipline-modal',[
-        'athlete' => 1,
-    ], key(1)) --}}
-
-    {{-- @if ($yearSelected !=0)
-        <div class="d-flex mb-2">
-            <div class="d-flex justify-content-end">
-                <x-basic-modal modalName="test" showModal='{{ $showModal }}'>
-                    <x-slot name="title">DISCIPLINE</x-slot>
-                    <x-slot name="btn">
-                        <a class="btn btn-success btn-sm" href="#" wire:click="modal('1')" onclick="showModal('test')" >+</a>
-                    </x-slot>
-                    <div class="row">
-                        <div class="col">
-                            <b>Trkače discipline</b><br>
-                            <table class="table">  
-                                @foreach ($discipline->where('type', 1) as $dspl)
-                                    <tr>
-                                        <td>{{ $dspl->name }}</td>
-                                        <td>
-                                            <input class="form-check-input" type="checkbox" wire:model.live='dsplArray.{{ $dspl->id }}'>
-                                        </td> 
-                                    </tr>
-                                @endforeach
-                            </table>
-                        </div>
-                        <div class="col">
-                            <b>Tehničke discipline</b><br>
-                            <table class="table">  
-                                @foreach ($discipline->where('type', 2) as $dspl)
-                                    <tr>
-                                        <td>{{ $dspl->name }}</td>
-                                        <td>
-                                            <input class="form-check-input" type="checkbox" wire:model.live='dsplArray.{{ $dspl->id }}'>
-                                        </td> 
-                                    </tr>
-                                @endforeach
-                            </table>
-                        </div>
-                    </div>
-                </x-basic-modal>
-            </div>
-            &nbsp;
-            <div class="justify-content-start"><b>Discipline: </b></div>
-        </div>
-        <x-discipline-modal>     
-        </x-discipline-modal>
-        &nbsp; - Štafeta,
-        <hr>
-    @endif --}}
-
     <button wire:click='test'>test</button><br>
 
     @foreach ($comp as $key => $c)
         {{ $key }} | {{ $c['firstName'] }} {{ $c['lastName'] }} / G:{{ $c['gender'] }} <br>
+        @foreach ($c['info'] as $k => $v)
+            &nbsp; - {{ $k }} - {{ $v }} <br>
+        @endforeach
     @endforeach
     
 
