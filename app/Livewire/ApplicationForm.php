@@ -23,6 +23,8 @@ class ApplicationForm extends Component
     public $discipline = NULL;
     public $dsplArray  = [];
     public $showModal  = 'none';
+    public $teamName;
+    public $error=[];
 
     #[On('refreshComponent')] 
     public function mount(){
@@ -87,6 +89,10 @@ class ApplicationForm extends Component
         }
     }
 
+    public function saveApplication(){
+        $this->validateData();
+    }
+
     private function setMixCat($trigger=null){
         return $this->cat->where('name', '!=', 'MIX');
     }
@@ -111,6 +117,40 @@ class ApplicationForm extends Component
             }
             return $array;
        }
+    }
+
+    private function validateData(){
+        $data=[
+            'message' => NULL,
+            'errorCount' => NULL,
+            'data' => NULL,
+        ];
+        $errorCount=0;
+        $this->error=[];
+
+        //Check if team name is set
+        if(!$this->teamName){
+            $this->error['teamName']=TRUE;
+            $errorCount++;
+        }
+        //Check if year is set
+        if($this->yearSelected == 0){
+            $this->error['yearSelected']=TRUE;
+            $errorCount++;
+        }
+        //Check if category is set
+        if($this->catSelected == 0){
+            $this->error['catSelected']=TRUE;
+            $errorCount++;
+        }
+
+        foreach ($this->comp as $key => $value) {
+            if($this->comp ){
+
+            }
+        }
+
+        
     }
 
     public function render()

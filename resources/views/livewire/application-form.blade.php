@@ -1,14 +1,14 @@
 <div>
     <div class="form-group mb-2">
         <label for="exampleInputEmail1">NAZIV EKIPE</label>
-        <input type="email" class="form-control" id="team" >
+        <input type="email" class="form-control @isset($error['teamName']) is-invalid @endisset" id="team" wire:model.blur='teamName'>
       </div>
 
       <div class="row">
         <div class="col">
           <div class="form-group">
             <label for="inputState">GODIŠTE</label>
-            <select id="inputState" class="form-control" wire:model.live='yearSelected'>
+            <select id="inputState" class="form-control @isset($error['yearSelected']) is-invalid @endisset" wire:model.live='yearSelected'>
                 <option value=0>Odaberi...</option>
                 @foreach ($years as $year)
                   <option value="{{ $year->year }}">{{ $year->year }}</option>
@@ -20,7 +20,7 @@
         <div class="col">
           <div class="form-group">
             <label for="categories">KATEGORIJA</label>
-            <select id="categories" class="form-control" wire:model.live='catSelected'>
+            <select id="categories" class="form-control @isset($error['catSelected']) is-invalid @endisset" wire:model.live='catSelected'>
               <option value=0>Odaberi...</option>
               @foreach ($cat as $c)
                 <option value="{{ $c->id }}">{{ $c->name }}</option>
@@ -48,8 +48,8 @@
                 @for ($i = 1; $i <= $maxComp; $i++)
                     <tr>
                         <td rowspan="2">{{ $i }}</td>
-                        <td><input type="text" class="form-control" id="firstName" wire:model.blur='comp.{{ $i }}.firstName'></td>
-                        <td><input type="text" class="form-control" id="lastName" wire:model.blur='comp.{{ $i }}.lastName'></td>
+                        <td><input type="text" class="form-control" id="firstName" placeholder="Ime" wire:model.blur='comp.{{ $i }}.firstName'></td>
+                        <td><input type="text" class="form-control" id="lastName" placeholder="Prezime" wire:model.blur='comp.{{ $i }}.lastName'></td>
                         @if ($catSelected == 3)
                             <td>
                                 <select id="inputState" class="form-control" wire:model.live='comp.{{ $i }}.gender'>
@@ -99,6 +99,8 @@
         </table> 
         <hr> 
     @endif
+
+    <button wire:click='saveApplication'>SAVE</button><br><br>
 
     <button wire:click='test'>test</button><br>
 
