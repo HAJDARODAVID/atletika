@@ -53,7 +53,7 @@
                         @if ($catSelected == 3)
                             <td>
                                 <select id="inputState" class="form-control" wire:model.live='comp.{{ $i }}.gender'>
-                                    <option value=0 disabled>&#9794; / &#9792;</option>
+                                    <option value=0>&#9794; / &#9792;</option>
                                     @foreach ($mixCat as $mc)
                                         <option value="{{ $mc->id }}"
                                             @if ($genderCount[$mc->id] >= $maxComp/$ratio) disabled @endif
