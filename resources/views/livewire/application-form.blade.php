@@ -70,13 +70,13 @@
                                     'athlete' => $i,
                                     'athleteName' => $comp[$i]['firstName'] .' '. $comp[$i]['lastName'],
                                     'info' => $comp[$i]['info'],
-                                ], key(date('h-m-s')))   
+                                ], key(date('h-m-s').$i))   
                                 @if ($yearSelected)
                                     @livewire('discipline-modal',[
                                         'athlete' => $i,
                                         'disciplines' => $discipline,
                                         'dsplArray' => $comp[$i]['dspl'] != NULL ? $comp[$i]['dspl'] :$dsplArray
-                                    ], key(date('h-m-s')))  
+                                    ], key(date('h-m-s').$i))  
                                 @endif 
                             @endif
                         </td> 
