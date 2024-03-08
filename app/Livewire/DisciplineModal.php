@@ -24,12 +24,10 @@ class DisciplineModal extends Component
     public function changeModalStatus($status=0){
         if($status){
             $this->dsplCount = $this->dsplCount($this->dsplArray);
-            //$this->checkIfComplete();
             return $this->modalShowStatus = 'block';
         }
         if(!$status){
             $this->dispatch('setUpDisciplinesForAthlete', $this->athlete, $this->dsplArray);
-            //$this->checkIfComplete();
             return $this->modalShowStatus = 'none';
         }
     }
@@ -42,7 +40,6 @@ class DisciplineModal extends Component
         if(!$key){
             $this->dsplCount[$type]--;
         }
-        //$this->checkIfComplete();
     }
 
     private function dsplCount($array){
