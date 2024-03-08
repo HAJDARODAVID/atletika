@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\State;
 use Livewire\Component;
 
 class PersonalInfoModal extends Component
@@ -12,8 +13,10 @@ class PersonalInfoModal extends Component
     public $athlete;
     public $athleteName;
     public $error = [];
+    public $state;
 
     public function mount(){
+        $this->state = State::get();
         $this->checkIfComplete();
         $this->checkIfAllIsEmpty();
     }

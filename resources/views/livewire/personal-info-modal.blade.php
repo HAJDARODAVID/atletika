@@ -25,6 +25,9 @@
                             <label for="inputState">Država</label>
                             <select id="inputState" class="form-control @if($error['state']) is-invalid @endif" wire:model.blur='info.state'>
                                 <option selected>Choose...</option>
+                                @foreach ($state as $st)
+                                    <option value="{{ $st->short_txt }}">{{ $st->cro }}</option>    
+                                @endforeach
                                 <option>...</option>
                             </select>
                         </div>

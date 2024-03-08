@@ -2,11 +2,11 @@
 
 namespace App\Livewire;
 
+use App\Models\Year;
+use App\Models\Dsply;
+use Livewire\Component;
 use App\Models\Category;
 use App\Models\Discipline;
-use App\Models\Dsply;
-use App\Models\Year;
-use Livewire\Component;
 use Livewire\Attributes\On; 
 
 class ApplicationForm extends Component
