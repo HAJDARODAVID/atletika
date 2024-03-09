@@ -99,6 +99,10 @@ class ApplicationForm extends Component
         if($data['errorCount'] == 0){
             $service = new ApplicationFormService;
             $service->saveNewApplication($data['data']);
+            if(isset($service->message['error'])){
+
+            }
+            dd($service->message['error']);
             return redirect()->route('saveTeamApplication');
         }
     }

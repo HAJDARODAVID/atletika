@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Competition extends Model
 {
@@ -20,5 +21,13 @@ class Competition extends Model
         'to',
         'status',
     ];
+
+    /**
+     * Get all athletes in competition.
+     */
+    public function getAthletesInComp(): HasMany
+    {
+        return $this->hasMany(AthleteInComp::class, 'comp_id', 'id');
+    }
 
 }
