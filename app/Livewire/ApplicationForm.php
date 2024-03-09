@@ -7,6 +7,7 @@ use App\Models\Dsply;
 use Livewire\Component;
 use App\Models\Category;
 use App\Models\Discipline;
+use App\Services\ApplicationFormService;
 use Livewire\Attributes\On; 
 
 class ApplicationForm extends Component
@@ -96,6 +97,8 @@ class ApplicationForm extends Component
         }
 
         if($data['errorCount'] == 0){
+            $service = new ApplicationFormService;
+            $service->saveNewApplication($data['data']);
             return redirect()->route('saveTeamApplication');
         }
     }
@@ -187,8 +190,15 @@ class ApplicationForm extends Component
         }
         if(!$athleteCount){
             $this->error[1]['row']=TRUE;
+            $errorCount++;
         }
         $data['errorCount'] = $errorCount;
+        $data['data']=[
+            'teamName' => $this->teamName,
+            'yearSelected' => $this->yearSelected,
+            'catSelected' => $this->catSelected,
+            'comp' => $this->comp,
+        ];
         return $data;        
     }
 

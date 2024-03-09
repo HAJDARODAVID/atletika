@@ -7,5 +7,8 @@ namespace App\Services;
  */
 class ApplicationFormService
 {
+    public function saveNewApplication($data=NULL){
+        dd($data);
+    }
 
 }
