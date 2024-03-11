@@ -105,8 +105,9 @@ class ApplicationForm extends Component
                 $this->error['message'] = $service->message['error'];
                 return;
             }
-            dd($service->message['error']);
-            return redirect()->route('saveTeamApplication');
+            if(isset($service->message['success'])){
+                return redirect()->route('myHome')->with('success', 'Nova prijavnica uspješno kreirana!');
+            }
         }
     }
 

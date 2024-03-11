@@ -70,9 +70,9 @@ class ApplicationFormService implements Wireable
             'year' => $data['yearSelected'], 
             'category' => $data['catSelected'],
         ]);
-        dd($newApplication);
-
         
+
+        return $this->message['success'] = TRUE;
     }
 
     public function toLivewire()
