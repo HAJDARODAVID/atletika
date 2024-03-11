@@ -6,6 +6,8 @@ use Livewire\Wireable;
 use App\Models\Athlete;
 use App\Models\Competition;
 use App\Models\AthleteInComp;
+use App\Models\ApplicationForm;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class ApplicationFormService.
@@ -16,8 +18,7 @@ class ApplicationFormService implements Wireable
 
     public function saveNewApplication($data=NULL){
 
-        $data['comp_id']=4;//OVO OBRISATI
-        $competition = Competition::with('getAthletesInComp', 'getAthletesInComp.getAthlete')->find($data['comp_id']);
+        $competition = Competition::with('getAthletesInComp', 'getAthletesInComp.getAthlete')->find($data['compId']);
         //check if competition exists
         if(is_null($competition)){
             $this->message['error']=[
@@ -61,7 +62,17 @@ class ApplicationFormService implements Wireable
             return;
         };
 
-        dd('brake');
+        //create a new application form entry
+        $newApplication = ApplicationForm::create([
+            'user_id' => Auth::user()->id, 
+            'comp_id' => $data['compId'], 
+            'team_name' => $data['teamName'], 
+            'year' => $data['yearSelected'], 
+            'category' => $data['catSelected'],
+        ]);
+        dd($newApplication);
+
+        
     }
 
     public function toLivewire()

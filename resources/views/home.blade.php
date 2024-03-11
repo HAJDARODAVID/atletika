@@ -1,23 +1,33 @@
-@extends('layouts.app')
+@extends('layouts.appNew')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+<div  >
+  @guest
+  <div class="row justify-content-center">
+      Tu ide nekaj dok nisi prijavljeni
+  </div>
+  @endguest
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+  @auth
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+              <p class="h5"><b>Obrazac za prijavu natjecatelja</b></p>
+            </div>
 
-                    {{ __('You are logged in!') }}
-                </div>
+            <div class="card-body d-flex justify-content-center">
+              <div class="" style="width: 750px">
+
+                @livewire('competitions-for-application-table',[
+                  'theme' => 'bootstrap-5',
+                ])
+              </div>  
             </div>
         </div>
     </div>
+  </div>
+  @endauth
+    
 </div>
 @endsection

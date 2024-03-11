@@ -102,7 +102,7 @@
         <hr> 
     @endif
 
-    @if ($error['message'])
+    @isset ($error['message'])
       <div class="row justify-content-center">
         <div class="col">
           <div class="alert alert-danger">
@@ -112,7 +112,7 @@
           </div>   
         </div>
       </div>
-    @endif
+    @endisset
     
     <div class="d-flex justify-content-center">
         <button class="btn btn-success btn-lg" wire:click='saveApplication'>SAVE</button>

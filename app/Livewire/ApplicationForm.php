@@ -20,6 +20,7 @@ class ApplicationForm extends Component
     public $maxComp      = 4;
     public $ratio        = 2;
     public $comp;
+    public $compId;
     public $genderCount;
     public $discipline = NULL;
     public $dsplArray  = [];
@@ -96,7 +97,7 @@ class ApplicationForm extends Component
         if($data['errorCount']){
             return;
         }
-
+        $data['data']['compId'] = $this->compId;
         if($data['errorCount'] == 0){
             $service = new ApplicationFormService;
             $service->saveNewApplication($data['data']);

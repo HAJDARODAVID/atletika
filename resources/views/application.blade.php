@@ -17,8 +17,10 @@
 
               <div class="card-body d-flex justify-content-center">
                 <div class="" style="width: 550px">
-                  
-                  @livewire('application-form')
+
+                  @livewire('application-form',[
+                    'compId' => $compObj->id,
+                  ])
                 </div>  
               </div>
           </div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApplicationFormController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -18,17 +19,19 @@ use App\Http\Controllers\CompetitionController;
 |
 */
 
-Route::get('/', function () {
-    return view('application');
-});
-
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', function () {
+    return view('home');
+})->name('myHome');
 
-Route::get('/test', function(){
-    return "USPEL SI ŽBRGLJO";
-})->name('saveTeamApplication');
+Route::controller(ApplicationFormController::class)
+    ->middleware('auth')
+    ->group(function(){
+        Route::get('/application/{competition}', 'application')->name('application');
+    });
+
+
 
 Route::prefix('/adm')
     ->group(function(){
@@ -58,6 +61,8 @@ Route::get('/clear', function() {
     return  "all cleared ...";
 
 });
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     
 
 
