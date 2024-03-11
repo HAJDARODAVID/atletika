@@ -34,6 +34,7 @@ Route::controller(ApplicationFormController::class)
 
 
 Route::prefix('/adm')
+    ->middleware('auth')
     ->group(function(){
         Route::controller(DashboardController::class)
             ->group(function(){
