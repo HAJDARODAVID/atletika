@@ -120,13 +120,13 @@
               Podaci prijavnice
             </a>
           </li>
-          {{-- <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="shopping-cart" class="align-text-bottom"></span>
-              Products
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('competitions') }}">
+              <span data-feather="dribbble" class="align-text-bottom"></span>
+              Natjecanja
             </a>
           </li>
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a class="nav-link" href="#">
               <span data-feather="users" class="align-text-bottom"></span>
               Customers

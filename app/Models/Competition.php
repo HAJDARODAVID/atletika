@@ -8,6 +8,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Competition extends Model
 {
+    const COMP_STATUS_INACTIVE = -1;
+    const COMP_STATUS_ACTIVE = 1;
+    const COMP_STATUS_DONE = 2;
+
+    const COMP_STATUS = [
+        self::COMP_STATUS_INACTIVE  => 'Deaktivirano',
+        self::COMP_STATUS_ACTIVE  => 'Aktivno',
+        self::COMP_STATUS_DONE  => 'Završeno',
+    ];
+
     use HasFactory;
 
     protected $table = 'competitions';

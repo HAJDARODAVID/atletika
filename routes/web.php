@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CompetitionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +43,22 @@ Route::prefix('/adm')
                 Route::post('/category_editor/year', 'addNewYear')->name('addNewYear');
                 Route::post('/category_editor/discipline','addNewDiscipline')->name('addNewDiscipline');
             });
+        Route::controller(CompetitionController::class)
+            ->group(function(){
+                Route::get('/competitions', 'competitions')->name('competitions');
+                Route::get('/competition/{id}', 'competition')->name('competition');
+            });
     });
+
+Route::get('/clear', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('route:cache');
+    Artisan::call('view:clear');
+    Artisan::call('config:cache');
+    return  "all cleared ...";
+
+});
+    
 
 
 

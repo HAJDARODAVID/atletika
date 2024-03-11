@@ -91,6 +91,7 @@ class ApplicationForm extends Component
     }
 
     public function saveApplication(){
+        unset($this->error['message']); 
         $data = $this->validateData();
         if($data['errorCount']){
             return;
@@ -100,7 +101,8 @@ class ApplicationForm extends Component
             $service = new ApplicationFormService;
             $service->saveNewApplication($data['data']);
             if(isset($service->message['error'])){
-
+                $this->error['message'] = $service->message['error'];
+                return;
             }
             dd($service->message['error']);
             return redirect()->route('saveTeamApplication');

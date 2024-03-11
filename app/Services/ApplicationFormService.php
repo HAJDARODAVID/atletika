@@ -16,9 +16,15 @@ class ApplicationFormService implements Wireable
 
     public function saveNewApplication($data=NULL){
 
-        $data['comp_id']=1;//OVO OBRISATI
+        $data['comp_id']=4;//OVO OBRISATI
         $competition = Competition::with('getAthletesInComp', 'getAthletesInComp.getAthlete')->find($data['comp_id']);
-        $athleteInComp = $competition->getAthletesInComp;
+        //check if competition exists
+        if(is_null($competition)){
+            $this->message['error']=[
+                $data['comp_id'] => 'Natjecanje #' . $data['comp_id'] . ' nepostoji!',
+            ];
+            return;
+        }
 
         //set up a athlete info array
         $athletes = [];
@@ -39,6 +45,7 @@ class ApplicationFormService implements Wireable
         }
 
         //check if athletea are in competition 
+        $athleteInComp = $competition->getAthletesInComp;
         foreach ($athletes as $athlete) {
             $athleteObj = Athlete::where('athlete_id', $athlete['athlete_id'])->first();
             if(!is_null($athleteObj)){

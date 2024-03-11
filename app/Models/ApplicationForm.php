@@ -14,5 +14,8 @@ class ApplicationForm extends Model
     protected $fillable =[
         'user_id', 
         'comp_id', 
+        'team_name', 
+        'year', 
+        'category',
     ];
 }

@@ -101,21 +101,20 @@
         </table> 
         <hr> 
     @endif
+
+    @if ($error['message'])
+      <div class="row justify-content-center">
+        <div class="col">
+          <div class="alert alert-danger">
+            @foreach($error['message'] as $message)
+                <p>{{ $message }}</p>
+            @endforeach
+          </div>   
+        </div>
+      </div>
+    @endif
     
     <div class="d-flex justify-content-center">
         <button class="btn btn-success btn-lg" wire:click='saveApplication'>SAVE</button>
-    </div>
-    
-
-    {{-- <button wire:click='test'>test</button><br> --}}
-
-    {{-- @foreach ($comp as $key => $c)
-        {{ $key }} | {{ $c['firstName'] }} {{ $c['lastName'] }} / G:{{ $c['gender'] }} <br>
-        @foreach ($c['info'] as $k => $v)
-            &nbsp; - {{ $k }} - {{ $v }} <br>
-        @endforeach
-    @endforeach --}}
-    
-
-    
+    </div>    
 </div>
