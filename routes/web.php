@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CompetitionController;
+use App\Models\ApplicationForm;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,7 @@ Route::controller(ApplicationFormController::class)
     ->middleware('auth')
     ->group(function(){
         Route::get('/application/{competition}', 'application')->name('application');
+        Route::get('/show_application/{competition}', 'application')->name('application');
     });
 
 
@@ -52,6 +54,10 @@ Route::prefix('/adm')
                 Route::get('/competitions', 'competitions')->name('competitions');
                 Route::get('/competition/{id}', 'competition')->name('competition');
             });
+        Route::controller(ApplicationFormController::class)
+            ->group(function(){
+                Route::get('/application/{id}', 'showApplication')->name('showApplicationAdm');
+            });
     });
 
 Route::get('/clear', function() {
@@ -64,6 +70,17 @@ Route::get('/clear', function() {
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/test', function () {
+    return dd(
+        ApplicationForm::where('id', 6)
+            ->with(
+                'getAthletesFromApplication',
+                'getDisciplines',
+            )
+            ->get()
+    );
+});
     
 
 

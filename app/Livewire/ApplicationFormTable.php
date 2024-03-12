@@ -15,6 +15,9 @@ class ApplicationFormTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id');
+        $this->setTableRowUrl(function($row) {
+            return route('showApplicationAdm', $row->id);
+            });
     }
 
     public function columns(): array

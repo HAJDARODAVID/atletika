@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ApplicationForm extends Model
 {
@@ -18,4 +19,9 @@ class ApplicationForm extends Model
         'year', 
         'category',
     ];
+
+    public function getAthletesFromApplication(): HasMany
+    {
+        return $this->hasMany(AthleteInComp::class, 'app_id', 'id');
+    }
 }

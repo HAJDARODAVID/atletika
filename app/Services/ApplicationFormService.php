@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Livewire\Wireable;
 use App\Models\Athlete;
+use App\Models\AthleteDspl;
 use App\Models\Competition;
 use App\Models\AthleteInComp;
 use App\Models\ApplicationForm;
@@ -33,18 +34,18 @@ class ApplicationFormService implements Wireable
             if($value['firstName'] != null && $value['lastName'] != null){
                 extract($value['info']);
                 $athletes[$key] = [
-                    'firstName' => $value['firstName'],
-                    'lastName' => $value['lastName'],
-                    'gender' => $value['gender'] == NULL ? $data['catSelected'] : $value['gender'],
-                    'address' => $address,
-                    'city' => $city,
-                    'state' => $state,
-                    'zip' => $zip,
+                    'firstName'  => $value['firstName'],
+                    'lastName'   => $value['lastName'],
+                    'gender'     => $value['gender'] == NULL ? $data['catSelected'] : $value['gender'],
+                    'address'    => $address,
+                    'city'       => $city,
+                    'state'      => $state,
+                    'zip'        => $zip,
                     'athlete_id' => $athlete_id,
                 ];
             }
         }
-
+        
         //check if athletea are in competition 
         $athleteInComp = $competition->getAthletesInComp;
         foreach ($athletes as $athlete) {
@@ -56,7 +57,6 @@ class ApplicationFormService implements Wireable
                 }
             }
         }
-        
         //return if error
         if(isset($this->message['error'])){
             return;
@@ -64,12 +64,38 @@ class ApplicationFormService implements Wireable
 
         //create a new application form entry
         $newApplication = ApplicationForm::create([
-            'user_id' => Auth::user()->id, 
-            'comp_id' => $data['compId'], 
-            'team_name' => $data['teamName'], 
-            'year' => $data['yearSelected'], 
-            'category' => $data['catSelected'],
+            'user_id'   => Auth::user()->id,
+            'comp_id'   => $data['compId'],
+            'team_name' => $data['teamName'],
+            'year'      => $data['yearSelected'],
+            'category'  => $data['catSelected'],
         ]);
+
+        //create new athlete or update existing, then add to competition
+        $dspList=$data['comp'];
+        foreach ($athletes as $key => $athlete) {
+            //check if athlete exists
+            $athleteObj = Athlete::where('athlete_id', $athlete['athlete_id'])->first();
+            if(!is_null($athleteObj)){
+                $athleteObj->update($athlete);            
+            }else{
+                $athleteObj = Athlete::create($athlete);
+            }
+            //add athlete to competition
+            $aic = AthleteInComp::create([
+                'comp_id'    => $data['compId'],
+                'app_id'     => $newApplication->id,
+                'athlete_id' => $athleteObj->id
+            ]);
+            foreach($dspList[$key]['dspl'] as $dsp_id => $isTrue){
+                if($isTrue){
+                    AthleteDspl::create([
+                        'aic_id'  => $aic->id,
+                        'dspl_id' => $dsp_id,
+                    ]);
+                }
+            }
+        }
         
 
         return $this->message['success'] = TRUE;
