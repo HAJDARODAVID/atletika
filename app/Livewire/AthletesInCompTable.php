@@ -26,7 +26,7 @@ class AthletesInCompTable extends DataTableComponent
                 ->sortable(),
             Column::make("Prezime", "getAthlete.lastName")
                 ->sortable(),
-            Column::make("Spol", "getAthlete.gender")
+            Column::make("Spol", "getAthlete.getGender.name")
                 ->sortable(),
             Column::make("Adresa", "getAthlete.address")
                 ->sortable(),
