@@ -23,6 +23,7 @@ class ApplicationFormController extends Controller
         $appForm= ApplicationForm::where('id', $id)
                     ->with(
                         'getAthletesFromApplication',
+                        'getCompetitionInfo',
                         'getAthletesFromApplication.getAthlete',
                         'getAthletesFromApplication.getDisciplines',
                         'getAthletesFromApplication.getDisciplines.getDisciplineInfo',
