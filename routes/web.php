@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Competition;
 use App\Models\ApplicationForm;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -31,7 +32,7 @@ Route::controller(ApplicationFormController::class)
     ->middleware('auth')
     ->group(function(){
         Route::get('/application/{competition}', 'application')->name('application');
-        Route::get('/show_application/{competition}', 'application')->name('application');
+        //Route::get('/show_application/{app}', 'myApplication')->name('myApplication');
     });
 
 
@@ -79,14 +80,12 @@ Route::get('/clear', function() {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/test', function () {
-    return dd(
-        ApplicationForm::where('id', 6)
-            ->with(
-                'getAthletesFromApplication',
-                'getDisciplines',
-            )
-            ->get()
-    );
+    $comp = Competition::where('id', 4)->first();
+    return dd([
+        'from' => $comp->from,
+        'to' => $comp->to,
+        'compare' => date('Y-m-d') >=  $comp->from && date('Y-m-d') <=  $comp->to
+    ]);
 });
     
 

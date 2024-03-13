@@ -13,9 +13,12 @@ class ApplicationFormController extends Controller
         if($compObj->status != 1){
             return redirect()->route('myHome');
         }
-        return view('application',[
-            'compObj' => $compObj,
-        ]);
+        if(date('Y-m-d') >=  $compObj->from && date('Y-m-d') <=  $compObj->to){
+            return view('application',[
+                'compObj' => $compObj,
+            ]);
+        }
+        return redirect()->route('myHome');   
     }
 
     public function showApplication($id){

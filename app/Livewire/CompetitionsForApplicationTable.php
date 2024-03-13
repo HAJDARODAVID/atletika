@@ -17,7 +17,10 @@ class CompetitionsForApplicationTable extends DataTableComponent
         $this->setPrimaryKey('id');
         $this->setSearchBlur();
         $this->setTableRowUrl(function($row) {
-            return route('application', $row->id);
+            if(date('Y-m-d') >=  $row->from && date('Y-m-d') <=  $row->to){
+                return route('application', $row->id);
+            }
+            
             });
     }
 
@@ -35,9 +38,9 @@ class CompetitionsForApplicationTable extends DataTableComponent
                 ->sortable(),
             Column::make("Napomena", "remark")
                 ->sortable(),
-            Column::make("Od", "from")
+            Column::make("Prijava od", "from")
                 ->sortable(),
-            Column::make("Do", "to")
+            Column::make("Prijava do", "to")
                 ->sortable(),
             Column::make("Status", "status")
                 ->hideIf(TRUE),

@@ -13,7 +13,7 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
-              <p class="h5"><b>Obrazac za prijavu natjecatelja</b></p>
+              <p class="h5"><b>Popis aktivnih natjecanja</b></p>
             </div>
 
             <div class="card-body d-flex justify-content-center">
