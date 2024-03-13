@@ -27,6 +27,8 @@ class ApplicationForm extends Component
     public $showModal  = 'none';
     public $teamName;
     public $error=[];
+    public $updateData = NULL;
+    public $oldAppId = NULL;
 
     #[On('refreshComponent')] 
     public function mount(){
@@ -38,6 +40,7 @@ class ApplicationForm extends Component
             1 => 0,
             2 => 0,
         ];
+        $this->fillInDataIfEditMode();
     }
 
     public function test(){
@@ -100,7 +103,7 @@ class ApplicationForm extends Component
         $data['data']['compId'] = $this->compId;
         if($data['errorCount'] == 0){
             $service = new ApplicationFormService;
-            $service->saveNewApplication($data['data']);
+            $service->saveNewApplication($data['data'],$this->oldAppId);
             if(isset($service->message['error'])){
                 $this->error['message'] = $service->message['error'];
                 return;
@@ -222,6 +225,21 @@ class ApplicationForm extends Component
             }
         }
         return $finalArray;
+    }
+
+    private function fillInDataIfEditMode(){
+        if($this->updateData != NULL){
+            //dd($this->updateData);
+            $this->comp = $this->updateData['comp'];
+            $this->catSelected  = $this->updateData['catSelected'];
+            $this->yearSelected = $this->updateData['yearSelected'];
+            $this->teamName = $this->updateData['teamName'];
+            $dspy=Dsply::where('year_id', $this->yearSelected)
+                ->pluck('dspl_id')->toArray();
+            $dspl=Discipline::whereIn('id', $dspy)->get();
+            $this->discipline = $dspl;
+            
+        }
     }
 
     public function render()

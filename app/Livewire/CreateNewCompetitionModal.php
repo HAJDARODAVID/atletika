@@ -35,7 +35,7 @@ class CreateNewCompetitionModal extends Component
 
     private function dataValidation(){
         $this->error=[];
-        $keyArray=['name', 'organizer', 'place', 'remark', 'from', 'to'];
+        $keyArray=['name', 'organizer', 'place', 'remark', 'from', 'to', 'event_date'];
         $isComplete = TRUE;
         foreach ($keyArray as $key){
             if(!array_key_exists($key, $this->compInfo)){

@@ -30,4 +30,9 @@ class ApplicationForm extends Model
     {
         return $this->hasOne(Competition::class, 'id', 'comp_id');
     }
+
+    public function getCategory(): HasOne
+    {
+        return $this->hasOne(Category::class, 'id', 'category');
+    }
 }

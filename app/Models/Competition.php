@@ -29,6 +29,7 @@ class Competition extends Model
         'remark',
         'from',
         'to',
+        'event_date',
         'status',
     ];
 

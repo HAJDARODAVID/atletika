@@ -32,7 +32,7 @@ Route::controller(ApplicationFormController::class)
     ->middleware('auth')
     ->group(function(){
         Route::get('/application/{competition}', 'application')->name('application');
-        //Route::get('/show_application/{app}', 'myApplication')->name('myApplication');
+        Route::get('/show_application/{app}', 'showMyApplication')->name('showMyApplication');
     });
 
 
@@ -79,14 +79,7 @@ Route::get('/clear', function() {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/test', function () {
-    $comp = Competition::where('id', 4)->first();
-    return dd([
-        'from' => $comp->from,
-        'to' => $comp->to,
-        'compare' => date('Y-m-d') >=  $comp->from && date('Y-m-d') <=  $comp->to
-    ]);
-});
+
     
 
 

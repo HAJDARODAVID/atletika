@@ -31,12 +31,18 @@
                     </div>
                     <div class="row mb-2">
                         <div class="form-group col">
-                            <label for="from">Početak</label>
+                            <label for="from">Početak prijava</label>
                             <input type="date" class="form-control @isset($error['from']) is-invalid @endisset" id="from" wire:model.blur='compInfo.from'>
                         </div>
                         <div class="form-group col">
-                            <label for="to">Kraj</label>
+                            <label for="to">Kraj prijava</label>
                             <input type="date" class="form-control @isset($error['to']) is-invalid @endisset" id="to" wire:model.blur='compInfo.to'>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="form-group col">
+                            <label for="event_date">Početak prijava</label>
+                            <input type="date" class="form-control @isset($error['event_date']) is-invalid @endisset" id="event_date" wire:model.blur='compInfo.event_date'>
                         </div>
                     </div>
                 </div>

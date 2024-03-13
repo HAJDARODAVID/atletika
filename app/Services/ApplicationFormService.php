@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Dsply;
 use Livewire\Wireable;
 use App\Models\Athlete;
 use App\Models\AthleteDspl;
@@ -17,8 +18,8 @@ class ApplicationFormService implements Wireable
 {
     public $message=[];
 
-    public function saveNewApplication($data=NULL){
-
+    public function saveNewApplication($data=NULL, $oldAppId=NULL){
+        
         $competition = Competition::with('getAthletesInComp', 'getAthletesInComp.getAthlete')->find($data['compId']);
         //check if competition exists
         if(is_null($competition)){
@@ -27,7 +28,7 @@ class ApplicationFormService implements Wireable
             ];
             return;
         }
-
+        
         //set up a athlete info array
         $athletes = [];
         foreach ($data['comp'] as $key => $value) {
@@ -45,8 +46,18 @@ class ApplicationFormService implements Wireable
                 ];
             }
         }
+
+        /**
+         * Delete old application if $oldAppId != NULL
+         * This will happen when a user needs to change existing app-form 
+         * Also this will jump over the 'check if athletes are in competition' because, well, we deleted them
+         */
+        if($oldAppId){
+            ApplicationForm::find($oldAppId)->delete(); 
+            goto jumpOverCheckIfInCompetition;
+        }
         
-        //check if athletea are in competition 
+        //check if athletes are in competition 
         $athleteInComp = $competition->getAthletesInComp;
         foreach ($athletes as $athlete) {
             $athleteObj = Athlete::where('athlete_id', $athlete['athlete_id'])->first();
@@ -62,6 +73,7 @@ class ApplicationFormService implements Wireable
             return;
         };
 
+        jumpOverCheckIfInCompetition:
         //create a new application form entry
         $newApplication = ApplicationForm::create([
             'user_id'   => Auth::user()->id,
@@ -97,8 +109,39 @@ class ApplicationFormService implements Wireable
             }
         }
         
-
         return $this->message['success'] = TRUE;
+    }
+
+    public function getArrayForApplication($comp){
+        $data['compId'] = $comp->comp_id;
+        $data['teamName'] = $comp->team_name;
+        $data['yearSelected'] = $comp->year;
+        $data['catSelected'] = $comp->category;
+
+        $dspy=Dsply::where('year_id', $comp->year)
+            ->pluck('dspl_id')->toArray();
+
+        $i=1;  
+        foreach ($comp->getAthletesFromApplication as $athlete) {
+            $data['comp'][$i]=[
+                'firstName' => $athlete->getAthlete->firstName,
+                'lastName'  => $athlete->getAthlete->lastName,
+                'gender'    => $athlete->getAthlete->gender,
+            ];
+            $data['comp'][$i]['info']=[
+                'address'    => $athlete->getAthlete->address,
+                'city'       => $athlete->getAthlete->city,
+                'state'      => $athlete->getAthlete->state,
+                'zip'        => $athlete->getAthlete->zip,
+                'athlete_id' => $athlete->getAthlete->athlete_id,
+            ];
+            foreach ($dspy as $dsp) {
+                $data['comp'][$i]['dspl'][$dsp] = $athlete->getDisciplines->where('dspl_id', $dsp)->first() == NULL ? FALSE : TRUE;
+            }
+            $i++;
+        }
+        
+        return $data;
     }
 
     public function toLivewire()

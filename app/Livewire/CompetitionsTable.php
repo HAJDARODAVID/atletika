@@ -40,6 +40,8 @@ class CompetitionsTable extends DataTableComponent
                 ->sortable(),
             Column::make("To", "to")
                 ->sortable(),
+            Column::make("Event date", "event_date")
+                ->sortable(),
             Column::make("Status", "status")
                 ->sortable(),
             Column::make('Actions')

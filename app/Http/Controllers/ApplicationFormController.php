@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Competition;
 use Illuminate\Http\Request;
 use App\Models\ApplicationForm;
+use App\Services\ApplicationFormService;
+use Illuminate\Support\Facades\Auth;
 
 class ApplicationFormController extends Controller
 {
@@ -36,6 +38,26 @@ class ApplicationFormController extends Controller
         return view('view.showApplication',[
             'appForm' => $appForm,
         ]);
+    }
 
+    public function showMyApplication($app){
+        $appForm= ApplicationForm::where('id', $app)
+                    ->with(
+                        'getAthletesFromApplication',
+                        'getCompetitionInfo',
+                        'getAthletesFromApplication.getAthlete',
+                        'getAthletesFromApplication.getDisciplines',
+                        'getAthletesFromApplication.getDisciplines.getDisciplineInfo',
+                    )
+                    ->first();
+        if($appForm->user_id != Auth::user()->id){
+            return redirect()->route('myHome');
+        }
+        $service = new ApplicationFormService;
+        $data = $service->getArrayForApplication($appForm);
+        return view('myApplication',[
+            'appForm' => $appForm,
+            'updateData' => $data,
+        ]);
     }
 }
