@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\ApplicationForm;
+use App\Models\Competition;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\Views\Column;
@@ -42,6 +43,7 @@ class MyApplicationsTable extends DataTableComponent
     public function builder(): Builder
     {
         return ApplicationForm::query()
-            ->where('user_id', Auth::user()->id);
+            ->where('user_id', Auth::user()->id)
+            ->where('getCompetitionInfo.status', Competition::COMP_STATUS_ACTIVE);
     }
 }
