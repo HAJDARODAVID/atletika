@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\ApplicationFormController;
+use App\Models\ApplicationForm;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CompetitionController;
-use App\Models\ApplicationForm;
+use App\Http\Controllers\ApplicationFormController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +58,12 @@ Route::prefix('/adm')
         Route::controller(ApplicationFormController::class)
             ->group(function(){
                 Route::get('/application/{id}', 'showApplication')->name('showApplicationAdm');
+            });
+
+        Route::controller(TicketsController::class)
+            ->group(function(){
+                Route::get('/tickets', 'tickets')->name('tickets');
+                Route::post('/tickets', 'newTickets')->name('newTickets');
             });
     });
 

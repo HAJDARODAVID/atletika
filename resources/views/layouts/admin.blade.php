@@ -126,13 +126,13 @@
               Natjecanja
             </a>
           </li>
-          {{-- <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="users" class="align-text-bottom"></span>
-              Customers
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('tickets') }}">
+              <span data-feather="clipboard" class="align-text-bottom"></span>
+              Tickets
             </a>
           </li>
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a class="nav-link" href="#">
               <span data-feather="bar-chart-2" class="align-text-bottom"></span>
               Reports
