@@ -39,7 +39,13 @@
                     <div class="row">
                         <div class="form-group">
                             <label for="athlete_id">Br. osobne iskaznice / putovnice</label>
-                            <input type="text" class="form-control @if($error['athlete_id']) is-invalid @endif" id="athlete_id" wire:model.blur='info.athlete_id'>
+                            <input type="text" class="form-control @if($error['athlete_id']) is-invalid @endif" id="athlete_id" wire:model.blur='info.athlete_id' />
+                            @isset($error['athlete_id'.'is-in-app'])
+                            <div class="text-danger">
+                                <i>Natjecatelj se nalazi unutar ove prijavnice!!</i>
+                            </div>
+                            @endisset
+                            
                         </div>    
                     </div>
                 </div>

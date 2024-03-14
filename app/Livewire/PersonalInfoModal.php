@@ -9,6 +9,7 @@ class PersonalInfoModal extends Component
 {
     public $modalShowStatus = 'none';
     public $isComplete;
+    public $comp;
     public $info;
     public $athlete;
     public $athleteName;
@@ -16,6 +17,7 @@ class PersonalInfoModal extends Component
     public $state;
 
     public function mount(){
+        $this->info = $this->comp[$this->athlete]['info'];
         $this->state = State::get();
         $this->checkIfComplete();
         $this->checkIfAllIsEmpty();
@@ -32,10 +34,26 @@ class PersonalInfoModal extends Component
     }
 
     public function updatedInfo($key, $value){
+        unset($this->error[$value.'is-in-app']);
         if($value != ""){
             $this->error[$value] = FALSE;
         }else{
             $this->error[$value] = TRUE;
+        }
+        if($value=='athlete_id'){
+            if($this->checkIfAthleteIsInApplication($key)){
+                $this->error[$value] = TRUE;
+                $this->error[$value.'is-in-app'] = TRUE;
+                $this->info[$value] = NULL;
+            }
+        }
+    }
+
+    private function checkIfAthleteIsInApplication($athleteId = NULL){    
+        foreach ($this->comp as $key => $value) {
+            if($key != $this->athlete && $value['info']['athlete_id'] == $athleteId){
+                return TRUE;
+            }
         }
     }
 

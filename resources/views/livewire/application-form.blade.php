@@ -65,32 +65,37 @@
                             </td>
                         @endif 
                         <td>
-                            @if ($comp[$i]['firstName'] && $comp[$i]['lastName'])
-                                @livewire('personal-info-modal', [
-                                    'athlete' => $i,
-                                    'athleteName' => $comp[$i]['firstName'] .' '. $comp[$i]['lastName'],
-                                    'info' => $comp[$i]['info'],
-                                ], key(date('h-m-s').$i))   
-                                @if ($yearSelected)
-                                    @livewire('discipline-modal',[
+                            @isset($comp[$i])
+                                @if ($comp[$i]['firstName'] && $comp[$i]['lastName'])
+                                    @livewire('personal-info-modal', [
                                         'athlete' => $i,
-                                        'disciplines' => $discipline,
-                                        'dsplArray' => $comp[$i]['dspl'] != NULL ? $comp[$i]['dspl'] :$dsplArray
-                                    ], key(date('h-m-s').$i))  
+                                        'athleteName' => $comp[$i]['firstName'] .' '. $comp[$i]['lastName'],
+                                        'comp' => $comp,
+                                    ], key(date('h-m-s').$i))   
+                                    @if ($yearSelected)
+                                        @livewire('discipline-modal',[
+                                            'athlete' => $i,
+                                            'disciplines' => $discipline,
+                                            'dsplArray' => $comp[$i]['dspl'] != NULL ? $comp[$i]['dspl'] :$dsplArray
+                                        ], key(date('h-m-s').$i))  
+                                    @endif 
                                 @endif 
-                            @endif
+                            @endisset
+                            
                         </td> 
                     </tr> 
                     <tr class="@isset($error[$i]['row']) table-danger @endisset">
                         <td colspan="2">
-                            Discipline: 
-                            @if (!is_null($comp[$i]['dspl']))
-                                @foreach ($comp[$i]['dspl'] as $key => $value )
-                                    @if ($value)
-                                        {{ $discipline->where('id', $key)->first()->name }},&nbsp;
-                                    @endif   
-                                @endforeach  
-                            @endif
+                            Discipline:
+                            @isset($comp[$i]) 
+                                @if (!is_null($comp[$i]['dspl']))
+                                    @foreach ($comp[$i]['dspl'] as $key => $value )
+                                        @if ($value)
+                                            {{ $discipline->where('id', $key)->first()->name }},&nbsp;
+                                        @endif   
+                                    @endforeach  
+                                @endif
+                            @endisset
                             Štafeta
                         </td>
                         <td></td>
