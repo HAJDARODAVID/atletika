@@ -55,6 +55,7 @@ class ApplicationFormController extends Controller
         }
         $service = new ApplicationFormService;
         $data = $service->getArrayForApplication($appForm);
+        dd($data);
         return view('myApplication',[
             'appForm' => $appForm,
             'updateData' => $data,

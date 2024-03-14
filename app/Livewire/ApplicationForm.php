@@ -229,7 +229,7 @@ class ApplicationForm extends Component
 
     private function fillInDataIfEditMode(){
         if($this->updateData != NULL){
-            dd($this->updateData);
+            //dd($this->updateData);
             $this->comp = $this->updateData['comp'];
             $this->catSelected  = $this->updateData['catSelected'];
             $this->yearSelected = $this->updateData['yearSelected'];
