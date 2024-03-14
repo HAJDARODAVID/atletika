@@ -84,7 +84,7 @@ class ApplicationForm extends Component
     public function updatedYearSelected(){
         $dspy=Dsply::where('year_id', $this->yearSelected)
             ->pluck('dspl_id')->toArray();
-        $dspl=Discipline::whereIn('id', $dspy)->get();
+        $dspl=Discipline::whereIn('id', $dspy)->orderBy('name','asc')->get();
         $this->discipline = $dspl;  
         foreach ($dspl as $dsp) {
             $this->dsplArray[$dsp->id]=FALSE; 
