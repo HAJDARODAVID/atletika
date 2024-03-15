@@ -47,6 +47,12 @@ class PersonalInfoModal extends Component
                 $this->info[$value] = NULL;
             }
         }
+        if($value=='zip'){
+            if(!is_int($key)){
+                $this->error[$value] = TRUE;
+                $this->info[$value] = NULL;
+            }
+        }
     }
 
     private function checkIfAthleteIsInApplication($athleteId = NULL){    

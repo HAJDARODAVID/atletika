@@ -33,7 +33,7 @@
                         </div>
                         <div class="form-group col-md-3">
                             <label for="inputZip">Zip</label>
-                            <input type="text" class="form-control @if($error['zip']) is-invalid @endif" id="inputZip" wire:model.blur='info.zip'>
+                            <input type="text" class="form-control @if($error['zip']) is-invalid @endif" id="inputZip" wire:model.number.live='info.zip'>
                         </div>
                     </div>
                     <div class="row">
